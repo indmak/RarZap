@@ -1,0 +1,11 @@
+Package: rarzap
+Version: 0.1.0
+Section: utils
+Priority: optional
+Architecture: amd64
+Maintainer: RarZap <https://github.com/indmak/RarZap>
+Description: RAR to ZIP converter (single-file free edition)
+ Fast local RAR -> ZIP conversion with a calm native desktop UI.
+ Batch conversion is provided by a separate commercial plugin.
+Homepage: https://github.com/indmak/RarZap
+License: MIT

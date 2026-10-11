@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>CFBundleDevelopmentRegion</key>
+  <string>en</string>
+  <key>CFBundleDisplayName</key>
+  <string>RarZap</string>
+  <key>CFBundleExecutable</key>
+  <string>rarzap</string>
+  <key>CFBundleIconFile</key>
+  <string>rarzap</string>
+  <key>CFBundleIdentifier</key>
+  <string>app.rarzap</string>
+  <key>CFBundleInfoDictionaryVersion</key>
+  <string>6.0</string>
+  <key>CFBundleName</key>
+  <string>RarZap</string>
+  <key>CFBundlePackageType</key>
+  <string>APPL</string>
+  <!-- 版本号统一：打包脚本用 cargo 版本覆写以下两项 -->
+  <key>CFBundleShortVersionString</key>
+  <string>0.1.0</string>
+  <key>CFBundleVersion</key>
+  <string>0.1.0</string>
+  <key>LSMinimumSystemVersion</key>
+  <string>14.0</string>
+  <key>NSHighResolutionCapable</key>
+  <true/>
+  <key>NSHumanReadableCopyright</key>
+  <string>MIT License. See LICENSE-MIT.</string>
+  <key>CFBundleLocalizations</key>
+  <array>
+    <string>en</string>
+    <string>fr</string>
+    <string>de</string>
+    <string>es</string>
+    <string>ru</string>
+    <string>ja</string>
+    <string>ko</string>
+    <string>zh_CN</string>
+  </array>
+</dict>
+</plist>

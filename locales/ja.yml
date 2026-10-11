@@ -1,0 +1,46 @@
+app:
+  title: "RarZap"
+nav:
+  back: "戻る"
+  settings: "設定"
+  privacy: "プライバシー"
+empty:
+  title: "RARファイルをドロップして変換"
+  hint: "または「ファイル選択」 · RAR → ZIP · ローカル・プライベート"
+  select_file: "ファイル選択"
+  footer: "RAR → ZIP · ファイルは端末から出ません"
+error:
+  not_rar: ".rar ファイルのみ対応しています"
+working:
+  extracting: "解凍中"
+  packing: "変換中"
+  cancel: "取消"
+status:
+  cancelling: "取消中…"
+done:
+  title_ok: "完了"
+  title_fail: "失敗"
+  title_cancelled: "取消済"
+  reveal: "出力フォルダを開く"
+  retry: "再試行"
+  again: "もう一つ変換"
+settings:
+  title: "設定"
+  language: "言語"
+  follow_system: "システムに従う"
+  theme: "テーマ"
+  theme_system: "システム"
+  theme_light: "ライト"
+  theme_dark: "ダーク"
+  output_dir: "出力フォルダ"
+  output_same_as_source: "元ファイルと同じフォルダ"
+  change: "変更"
+  reset_default: "既定に戻す"
+privacy:
+  title: "プライバシー"
+  p1: "変換はすべて端末内で行います。RarZap がファイルをアップロードしたり共有したりすることはありません。"
+  p2: "テレメトリもネットワークアクセスもありません。ログはローカルのアプリデータフォルダにのみ保存されます。"
+  p3: "RAR は unrar で読み取り、ディスク上で ZIP に再パックします。一時ファイルは自動的に削除されます。"
+  open_logs: "ログフォルダを開く"
+  version: "バージョン"
+  license: "MIT ライセンス · オープンソース"

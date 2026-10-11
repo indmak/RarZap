@@ -1,0 +1,46 @@
+app:
+  title: "RarZap"
+nav:
+  back: "Retour"
+  settings: "Paramètres"
+  privacy: "Confidentialité"
+empty:
+  title: "Déposez un fichier RAR pour convertir"
+  hint: "ou cliquez sur Choisir un fichier · RAR → ZIP · local et privé"
+  select_file: "Choisir un fichier"
+  footer: "RAR → ZIP · rien ne quitte votre machine"
+error:
+  not_rar: "Seuls les fichiers .rar sont pris en charge"
+working:
+  extracting: "Extraction"
+  packing: "Conversion"
+  cancel: "Annuler"
+status:
+  cancelling: "Annulation…"
+done:
+  title_ok: "Terminé"
+  title_fail: "Échec"
+  title_cancelled: "Annulé"
+  reveal: "Ouvrir le dossier"
+  retry: "Réessayer"
+  again: "Convertir un autre"
+settings:
+  title: "Paramètres"
+  language: "Langue"
+  follow_system: "Suivre le système"
+  theme: "Thème"
+  theme_system: "Système"
+  theme_light: "Clair"
+  theme_dark: "Sombre"
+  output_dir: "Dossier de sortie"
+  output_same_as_source: "Même dossier que le fichier source"
+  change: "Changer"
+  reset_default: "Réinitialiser"
+privacy:
+  title: "Confidentialité"
+  p1: "Toute la conversion se fait localement. RarZap ne téléverse ni ne partage jamais vos fichiers."
+  p2: "Aucune télémétrie, aucun accès réseau. Les journaux restent dans votre dossier local."
+  p3: "Les archives RAR sont lues avec unrar puis reconverties en ZIP sur votre disque ; les fichiers temporaires sont supprimés automatiquement."
+  open_logs: "Ouvrir le dossier des journaux"
+  version: "Version"
+  license: "Licence MIT · open source"

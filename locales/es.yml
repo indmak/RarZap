@@ -1,0 +1,46 @@
+app:
+  title: "RarZap"
+nav:
+  back: "Atrás"
+  settings: "Ajustes"
+  privacy: "Privacidad"
+empty:
+  title: "Arrastra un archivo RAR para convertir"
+  hint: "o pulsa Elegir archivo · RAR → ZIP · local y privado"
+  select_file: "Elegir archivo"
+  footer: "RAR → ZIP · nada sale de tu equipo"
+error:
+  not_rar: "Solo se admiten archivos .rar"
+working:
+  extracting: "Extrayendo"
+  packing: "Convirtiendo"
+  cancel: "Cancelar"
+status:
+  cancelling: "Cancelando…"
+done:
+  title_ok: "Listo"
+  title_fail: "Fallo"
+  title_cancelled: "Cancelado"
+  reveal: "Abrir carpeta"
+  retry: "Reintentar"
+  again: "Convertir otro"
+settings:
+  title: "Ajustes"
+  language: "Idioma"
+  follow_system: "Seguir el sistema"
+  theme: "Tema"
+  theme_system: "Sistema"
+  theme_light: "Claro"
+  theme_dark: "Oscuro"
+  output_dir: "Carpeta de salida"
+  output_same_as_source: "La misma carpeta que el archivo original"
+  change: "Cambiar"
+  reset_default: "Restablecer"
+privacy:
+  title: "Privacidad"
+  p1: "Toda la conversión se realiza localmente. RarZap nunca sube ni comparte tus archivos."
+  p2: "Sin telemetría ni acceso a la red. Los registros se guardan solo en la carpeta local de la app."
+  p3: "Los RAR se leen con unrar y se reempaquetan como ZIP en tu disco; los archivos temporales se eliminan automáticamente."
+  open_logs: "Abrir carpeta de registros"
+  version: "Versión"
+  license: "Licencia MIT · código abierto"

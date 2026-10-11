@@ -1,0 +1,46 @@
+app:
+  title: "RarZap"
+nav:
+  back: "返回"
+  settings: "设置"
+  privacy: "隐私"
+empty:
+  title: "拖入一个 RAR 文件开始转换"
+  hint: "或点击“选择文件” · 单个 RAR → ZIP · 本地 · 隐私"
+  select_file: "选择文件"
+  footer: "RAR → ZIP · 文件不离开本机"
+error:
+  not_rar: "仅支持 .rar 文件"
+working:
+  extracting: "解压中"
+  packing: "转换中"
+  cancel: "取消"
+status:
+  cancelling: "正在取消…"
+done:
+  title_ok: "转换完成"
+  title_fail: "转换失败"
+  title_cancelled: "已取消"
+  reveal: "打开输出文件夹"
+  retry: "重试"
+  again: "再转一个"
+settings:
+  title: "设置"
+  language: "语言"
+  follow_system: "跟随系统"
+  theme: "主题"
+  theme_system: "跟随系统"
+  theme_light: "浅色"
+  theme_dark: "深色"
+  output_dir: "输出目录"
+  output_same_as_source: "与源文件同目录"
+  change: "更改"
+  reset_default: "恢复默认"
+privacy:
+  title: "隐私"
+  p1: "所有转换均在本机完成。RarZap 从不上传、传输或共享你的文件。"
+  p2: "本软件不含任何遥测，也不访问网络。日志仅写入本机应用数据目录。"
+  p3: "RAR 通过 unrar 读取并在本机重新打包为 ZIP；临时文件会自动清理。"
+  open_logs: "打开日志目录"
+  version: "版本"
+  license: "MIT 许可 · 开源"

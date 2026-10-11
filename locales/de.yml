@@ -1,0 +1,46 @@
+app:
+  title: "RarZap"
+nav:
+  back: "Zurück"
+  settings: "Einstellungen"
+  privacy: "Datenschutz"
+empty:
+  title: "RAR-Datei hierher ziehen"
+  hint: "oder Datei wählen · RAR → ZIP · lokal und privat"
+  select_file: "Datei wählen"
+  footer: "RAR → ZIP · nichts verlässt deinen Rechner"
+error:
+  not_rar: "Nur .rar-Dateien werden unterstützt"
+working:
+  extracting: "Entpacken"
+  packing: "Konvertieren"
+  cancel: "Abbrechen"
+status:
+  cancelling: "Wird abgebrochen…"
+done:
+  title_ok: "Fertig"
+  title_fail: "Fehlgeschlagen"
+  title_cancelled: "Abgebrochen"
+  reveal: "Ausgabeordner öffnen"
+  retry: "Erneut versuchen"
+  again: "Weitere umwandeln"
+settings:
+  title: "Einstellungen"
+  language: "Sprache"
+  follow_system: "System folgen"
+  theme: "Design"
+  theme_system: "System"
+  theme_light: "Hell"
+  theme_dark: "Dunkel"
+  output_dir: "Ausgabeordner"
+  output_same_as_source: "Gleicher Ordner wie die Quelldatei"
+  change: "Ändern"
+  reset_default: "Zurücksetzen"
+privacy:
+  title: "Datenschutz"
+  p1: "Die gesamte Konvertierung erfolgt lokal. RarZap lädt Ihre Dateien niemals hoch oder teilt sie."
+  p2: "Keine Telemetrie, kein Netzwerkzugriff. Protokolle bleiben im lokalen App-Datenordner."
+  p3: "RAR-Archive werden mit unrar gelesen und auf Ihrer Festplatte als ZIP neu gepackt; temporäre Dateien werden automatisch entfernt."
+  open_logs: "Protokollordner öffnen"
+  version: "Version"
+  license: "MIT-Lizenz · Open Source"

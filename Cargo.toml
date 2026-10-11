@@ -1,0 +1,63 @@
+[package]
+name = "rarzap"
+# 唯一版本号来源：改这里即可，插件与商店包由 scripts/sync-version.ps1 同步。
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.92"
+description = "RarZap — RAR to ZIP converter (rar to zip)"
+license = "MIT"
+repository = "https://github.com/indmak/RarZap"
+homepage = "https://github.com/indmak/RarZap"
+keywords = ["rar", "zip", "converter", "archive"]
+categories = ["command-line-utilities"]
+readme = "README.md"
+
+[[bin]]
+name = "rarzap"
+path = "src/main.rs"
+
+[lib]
+name = "rarzap"
+path = "src/lib.rs"
+
+[features]
+# 默认把 Windows 图标/版本资源链进 exe。
+# 商业二进制（独立 crate）依赖本库时会关闭它，避免两份资源重复导致链接失败。
+default = ["winres"]
+winres = []
+
+[dependencies]
+# --- UI (GPUI Kit 门面 + 组件库，最新稳定版；必须经 gpui-kit 启动，含平台后端) ---
+gpui-kit = "0.7"
+gpui-component = "0.7.1"
+smol = "2"
+# --- 归档：单文件解压/打包 (CORE) ---
+unrar-ng = "0.7"
+zip = "9"
+tempfile = "3"
+# --- 错误 / 日志 ---
+anyhow = "1.0"
+thiserror = "2.0"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+tracing-appender = "0.2"
+# --- 配置 / 路径 / i18n ---
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+directories = "6.0"
+rust-i18n = "4.2"
+sys-locale = "0.3"
+
+[dev-dependencies]
+tempfile = "3"
+# 仅图标生成用（examples/generate_icons.rs），不进主二进制
+image = "0.25"
+
+[build-dependencies]
+# Windows exe 图标 + 文件版本（仅 Windows 生效，需 rc.exe；CI 的 windows-latest 自带）
+winres = "0.1"
+
+[profile.release]
+opt-level = 3
+strip = true
+codegen-units = 1

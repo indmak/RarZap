@@ -1,0 +1,46 @@
+app:
+  title: "RarZap"
+nav:
+  back: "뒤로"
+  settings: "설정"
+  privacy: "개인정보"
+empty:
+  title: "RAR 파일을 드래그하여 변환"
+  hint: "또는 파일 선택 · RAR → ZIP · 로컬 · 비공개"
+  select_file: "파일 선택"
+  footer: "RAR → ZIP · 파일은 기기를 떠나지 않습니다"
+error:
+  not_rar: ".rar 파일만 지원합니다"
+working:
+  extracting: "압축 해제 중"
+  packing: "변환 중"
+  cancel: "취소"
+status:
+  cancelling: "취소 중…"
+done:
+  title_ok: "완료"
+  title_fail: "실패"
+  title_cancelled: "취소됨"
+  reveal: "출력 폴더 열기"
+  retry: "다시 시도"
+  again: "하나 더 변환"
+settings:
+  title: "설정"
+  language: "언어"
+  follow_system: "시스템 따르기"
+  theme: "테마"
+  theme_system: "시스템"
+  theme_light: "라이트"
+  theme_dark: "다크"
+  output_dir: "출력 폴더"
+  output_same_as_source: "원본 파일과 같은 폴더"
+  change: "변경"
+  reset_default: "기본값"
+privacy:
+  title: "개인정보"
+  p1: "모든 변환은 기기에서 로컬로 처리됩니다. RarZap은 파일을 업로드하거나 공유하지 않습니다."
+  p2: "텔레메트리와 네트워크 접근이 없습니다. 로그는 로컬 앱 데이터 폴더에만 기록됩니다."
+  p3: "RAR은 unrar로 읽고 디스크에서 ZIP으로 다시 패킹합니다. 임시 파일은 자동으로 삭제됩니다."
+  open_logs: "로그 폴더 열기"
+  version: "버전"
+  license: "MIT 라이선스 · 오픈 소스"

@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=RarZap
+GenericName=RAR to ZIP converter
+Comment=Convert RAR archives to ZIP
+Exec=/usr/bin/rarzap
+Icon=rarzap
+StartupWMClass=rarzap
+Terminal=false
+Categories=Utility;Archiving;
+StartupNotify=true
+Keywords=rar;zip;archive;convert;
