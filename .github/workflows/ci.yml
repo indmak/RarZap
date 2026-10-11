@@ -148,8 +148,21 @@ jobs:
           echo "$MACOS_P12_B64" | base64 -d > /tmp/cert.p12
           CERT=/tmp/rarzap-ci.keychain
           security create-keychain -p "ci" "$CERT"
+          security set-keychain-settings -lut 21600 "$CERT"
+          security unlock-keychain -p "ci" "$CERT"
           security import /tmp/cert.p12 -k "$CERT" -P "$MACOS_P12_PASSWORD" -T /usr/bin/codesign
           security set-key-partition-list -S apple-tool:,apple: -s -k "ci" "$CERT"
+          # 关键：新建的钥匙串默认不在搜索列表里，不加这句 codesign 永远
+          # 报 no identity found（即使 P12 和 identity 名都对）。
+          security list-keychains -d user -s "$CERT" $(security list-keychains -d user | tr -d '"')
+          echo "--- identities in temp keychain ---"
+          security find-identity -v -p codesigning "$CERT" || true
+          # 前置断言：identity 名必须能在钥匙串里找到，否则直接报错，
+          # 免得 codesign 那句 no identity found 看不出是 secret 配错了。
+          security find-identity -v -p codesigning "$CERT" | grep -qF "$MACOS_SIGN_IDENTITY" || {
+            echo "MACOS_SIGN_IDENTITY not found in imported P12; check secrets (see log above)"
+            exit 1
+          }
           codesign --deep --force --options runtime --sign "$MACOS_SIGN_IDENTITY" target/macos-stage/RarZap.app
           echo "$APPLE_API_KEY_B64" | base64 -d > /tmp/apikey.p8
           xcrun notarytool submit target/macos-stage/RarZap.app --key /tmp/apikey.p8 \
