@@ -8,15 +8,13 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE-MIT)
 [![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey)]()
 
-English | [简体中文](README.zh-CN.md) *(TODO)*
-
-[Official site](https://rarzap.app) · [Microsoft Store](https://apps.microsoft.com/detail/rarzap) *(commercial batch edition)* · [Releases](https://github.com/indmak/RarZap/releases) · [Report a bug](https://github.com/indmak/RarZap/issues)
+[Official site](https://www.indmak.com/products/rarzap) · [Releases](https://github.com/indmak/RarZap/releases) · [Report a bug](https://github.com/indmak/RarZap/issues)
 
 </div>
 
 ![RarZap empty state](assets/screenshots/main-empty.png)
 
-> Screenshot: real app window (empty state, auto-matched system language).
+> Screenshot: real app window (empty state, English).
 
 | Converting | Done | Settings | Privacy |
 |---|---|---|---|
@@ -96,11 +94,6 @@ cargo build --release --locked
 cargo test --locked
 ```
 
-> **No network?** Route through the local proxy first (PowerShell):
-> ```powershell
-> $env:HTTP_PROXY="http://127.0.0.1:3128"; $env:HTTPS_PROXY="http://127.0.0.1:3128"
-> ```
-
 Regenerate icons from the single hand-drawn source (`docs-zh/logo-rar.png`):
 
 ```bash
@@ -146,7 +139,7 @@ src/
   free/     Free feature: single-file plan/run service
   ui/       Free UI: Empty / Working / Done (GPUI Kit)
   i18n.rs   8-locale setup (rust-i18n, compiled-in YAML)
-plugins/    Commercial batch plugin — LOCAL ONLY, git-ignored (see plugins/README.md)
+plugins/    Commercial batch plugin — LOCAL ONLY, git-ignored (whole directory)
 packaging/  Inno Setup (.iss) · macOS (.plist + make-app.sh) · Debian (.deb builder)
 ```
 
