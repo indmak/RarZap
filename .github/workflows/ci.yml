@@ -1,7 +1,7 @@
 # RarZap CI：三平台构建 + 测试 + 打包（开源免费版）。
-# - push/PR：构建 + 测试（快）。
-# - push main / 手动触发：额外打包安装包（exe/msi、dmg、deb），产物挂 artifact 供下载，不发布。
-# - 打 tag（v*）：构建 + 打包 + 发 GitHub Release（手动定版，见命名文档）。
+# 纯手动触发（Actions 页点 Run workflow）：push/PR 不触发任何构建。
+# 手动跑一次 = 构建 + 测试 + 打包安装包（挂 artifact 供下载），不发布。
+# 将来要发版时再加回 push/tags 触发；发 Release 仍只看 tag（见 github release 作业）。
 # - macOS 签名/公证：secrets 配齐才走，否则跳过（缺任一即跳）。
 # - Windows 签名：SignPath 获批前无签名（见命名文档）。
 # 代理：runner 直连外网，无需额外配置。
@@ -11,10 +11,7 @@
 name: ci
 
 on:
-  push:
-    branches: [main]
-    tags: ["v*"]
-  pull_request:
+  # 只手动点：Actions → ci → Run workflow。push/PR/tag 一律不自动跑。
   workflow_dispatch:
 
 env:
@@ -70,9 +67,7 @@ jobs:
   package:
     name: package (${{ matrix.os }})
     needs: build-test
-    # push main / 手动点 / 打 tag 都打包；PR 只跑构建测试以省时间。
-    # 注意：这里只产出 artifact，不发 Release（发版仍只看 tag，见 github release 作业）。
-    if: github.event_name != 'pull_request'
+    # 只产出 artifact，不发 Release（发版仍只看 tag，见 github release 作业）。
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
