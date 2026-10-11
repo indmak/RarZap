@@ -1,6 +1,7 @@
 # RarZap CI：三平台构建 + 测试 + 打包（开源免费版）。
 # 纯手动触发（Actions 页点 Run workflow）：push/PR 不触发任何构建。
-# 手动跑一次 = 构建 + 测试 + 打包安装包（挂 artifact 供下载），不发布。
+# 手动跑一次 = 单矩阵三作业（windows/macos/linux），每作业只编一次 release，
+# 测试用 --release 复用同一份构建，打包后挂 artifact 供下载，不发布。
 # 将来要发版时再加回 push/tags 触发；发 Release 仍只看 tag（见 github release 作业）。
 # - macOS 签名/公证：secrets 配齐才走，否则跳过（缺任一即跳）。
 # - Windows 签名：SignPath 获批前无签名（见命名文档）。
@@ -18,21 +19,34 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  build-test:
-    name: build+test (${{ matrix.os }})
+  build:
+    name: ${{ matrix.name }}
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
         include:
-          - os: windows-latest
+          - name: windows
+            os: windows-latest
             target: x86_64-pc-windows-msvc
-          - os: macos-latest
+          - name: macos
+            os: macos-latest
             target: aarch64-apple-darwin
-          - os: ubuntu-24.04
+          - name: linux
+            os: ubuntu-24.04
             target: x86_64-unknown-linux-gnu
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+
+      - name: Rust 工具链
+        uses: dtolnay/rust-toolchain@686976e191b89faba57d3206551f0f330d8cb249 # stable (2026-10-11)
+        with:
+          targets: ${{ matrix.target }}
+
+      # cargo 依赖+产物缓存：重复跑只编增量。key 按 target 隔离三平台。
+      - uses: Swatinem/rust-cache@63fed3e2fecf6f7b51dc6f043341b79ef82a9ae7 # v2.9.2
+        with:
+          key: ${{ matrix.target }}
 
       - name: Linux 系统依赖
         if: runner.os == 'Linux'
@@ -42,65 +56,14 @@ jobs:
             libxkbcommon-x11-dev libx11-xcb-dev libxcb1-dev libxkbcommon-dev \
             libssl-dev libzstd-dev libvulkan1
 
-      - name: Rust 工具链
-        uses: dtolnay/rust-toolchain@686976e191b89faba57d3206551f0f330d8cb249 # stable (2026-10-11)
-        with:
-          targets: ${{ matrix.target }}
-
-      - name: 构建
-        run: cargo build --release --locked --target ${{ matrix.target }}
-
-      - name: 测试
-        run: cargo test --locked --target ${{ matrix.target }}
-
-  audit:
-    name: dependency audit
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
-      # 对 Cargo.lock 做 RustSec 漏洞库比对；有已知漏洞时失败。
-      # 同时覆盖 unrar-ng-sys 这类 C 库的 CVE（审计意见 #1 的监控面）。
-      - uses: rustsec/audit-check@69366f33c96575abad1ee0dba8212993eecbe998 # v2 branch (v2.0.0)
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-  package:
-    name: package (${{ matrix.os }})
-    needs: build-test
-    # 只产出 artifact，不发 Release（发版仍只看 tag，见 github release 作业）。
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - os: windows-latest
-            target: x86_64-pc-windows-msvc
-          - os: macos-latest
-            target: aarch64-apple-darwin
-          - os: ubuntu-24.04
-            target: x86_64-unknown-linux-gnu
-    steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
-
-      - name: Linux 系统依赖
-        if: runner.os == 'Linux'
-        run: |
-          sudo apt update
-          sudo apt install -y gcc g++ clang libfontconfig-dev libwayland-dev \
-            libxkbcommon-x11-dev libx11-xcb-dev libxcb1-dev libxkbcommon-dev \
-            libssl-dev libzstd-dev libvulkan1
-
-      - name: Rust 工具链
-        uses: dtolnay/rust-toolchain@686976e191b89faba57d3206551f0f330d8cb249 # stable (2026-10-11)
-        with:
-          targets: ${{ matrix.target }}
-
+      # 全作业只编这一次：测试与打包全部复用它。
       - name: 构建
         run: cargo build --release --locked --target ${{ matrix.target }}
 
       # 图标熔断：build.rs 里 rc.exe 缺失只 warning，不断构建；真缺了 exe 就没图标
       # （窗口左上/任务栏全靠它，见 checklist 第 1 项），发包前必须拦下。
       # 注意：必须先 touch build.rs 强制重跑构建脚本，否则 cargo 直接缓存跳过、warning 不重现。
+      # （增量重编，几秒，不重新全量构建。）
       - name: Windows 图标检查
         if: runner.os == 'Windows'
         shell: pwsh
@@ -110,6 +73,10 @@ jobs:
           if ($LASTEXITCODE -ne 0) { throw "build failed" }
           if (Select-String -Path build-icon-check.log -Pattern "winres skipped") { throw "winres failed: exe ships without icon" }
           Remove-Item build-icon-check.log
+
+      # release 复用测试：依赖已编好，只增量编测试目标，不另起 dev profile 全量编。
+      - name: 测试
+        run: cargo test --release --locked --target ${{ matrix.target }}
 
       - name: 版本号
         id: ver
@@ -194,9 +161,20 @@ jobs:
             target/*.deb
           if-no-files-found: warn
 
+  audit:
+    name: dependency audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      # 对 Cargo.lock 做 RustSec 漏洞库比对；有已知漏洞时失败。
+      # 同时覆盖 unrar-ng-sys 这类 C 库的 CVE（审计意见 #1 的监控面）。
+      - uses: rustsec/audit-check@69366f33c96575abad1ee0dba8212993eecbe998 # v2 branch (v2.0.0)
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
   release:
     name: github release
-    needs: package
+    needs: build
     if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
     permissions:
