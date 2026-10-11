@@ -131,14 +131,16 @@ jobs:
             exit 1
           }
           codesign --deep --force --options runtime --sign "$MACOS_SIGN_IDENTITY" target/macos-stage/RarZap.app
-          echo "$APPLE_API_KEY_B64" | base64 -d > /tmp/apikey.p8
-          xcrun notarytool submit target/macos-stage/RarZap.app --key /tmp/apikey.p8 \
-            --key-id "$APPLE_API_KEY_ID" --issuer "$APPLE_API_ISSUER" --wait
-          xcrun stapler staple target/macos-stage/RarZap.app
-          # 顺序关键：必须用已签名的 .app 重打 DMG（直接重跑 make-app.sh 会删掉签名），
-          # 再把公证票钉到 DMG 上——Gatekeeper 验的是用户双击的这个 DMG。
+          # notarytool 只收 .zip/.pkg/.dmg，裸 .app 会被拒（"must be a zip archive..."）。
+          # 所以：先用已签名的 .app 打 DMG，再签 DMG，然后公证 DMG（用户双击的就是它）。
           SKIP_APP=1 bash packaging/macos/make-app.sh "target/${{ matrix.target }}/release"
+          codesign --force --sign "$MACOS_SIGN_IDENTITY" target/RarZap-*.dmg
+          echo "$APPLE_API_KEY_B64" | base64 -d > /tmp/apikey.p8
+          xcrun notarytool submit target/RarZap-*.dmg --key /tmp/apikey.p8 \
+            --key-id "$APPLE_API_KEY_ID" --issuer "$APPLE_API_ISSUER" --wait
+          # 同一张票同时钉到 DMG 和内层 .app（联网校验通过后离线也能开）。
           xcrun stapler staple target/RarZap-*.dmg
+          xcrun stapler staple target/macos-stage/RarZap.app
 
       - name: macOS 清理临时证书（无论成败）
         if: always() && runner.os == 'macOS'
