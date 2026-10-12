@@ -195,5 +195,7 @@ jobs:
           merge-multiple: true
       - uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65 # v2.6.2
         with:
-          files: dist/*
+          # 必须递归（**）：Windows 安装包在 artifact 里带 innosetup/ 子目录，
+          # dist/* 只匹配根级文件会把 setup.exe 漏掉。dmg/deb 在根级不受影响。
+          files: dist/**
           generate_release_notes: true
