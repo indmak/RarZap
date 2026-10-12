@@ -55,7 +55,9 @@ pub fn init_logging() {
     std::mem::forget(guard);
 
     let file_layer = fmt::layer().with_writer(non_blocking).with_ansi(false);
-    let stdout_layer = fmt::layer().with_writer(std::io::stdout);
+    // stdout 层仅 debug 用（开发时终端看日志）。release 无控制台，写了也是空转，
+    // 关掉更干净；日志始终进文件层。
+    let stdout_layer = cfg!(debug_assertions).then(|| fmt::layer().with_writer(std::io::stdout));
 
     let filter = EnvFilter::try_from_default_env().unwrap_or_else(|_| EnvFilter::new("info"));
 
