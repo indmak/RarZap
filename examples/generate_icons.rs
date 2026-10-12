@@ -1,5 +1,5 @@
 //! 图标生成：`cargo run --example generate_icons`
-//! 源：`docs-zh/logo-rar.png`（仓库唯一手绘源）
+//! 源：`assets/logo-rar.png`（仓库唯一手绘源）
 //! 产物（全部进仓库，供三端打包引用）：
 //! - `assets/icons/rarzap.ico`      Windows：exe / 任务栏 / 安装程序 / 安装包图标
 //! - `assets/icons/rarzap.icns`     macOS：.app / dmg 卷图标
@@ -12,7 +12,7 @@
 use image::imageops::FilterType;
 use std::path::{Path, PathBuf};
 
-const SRC: &str = "docs-zh/logo-rar.png";
+const SRC: &str = "assets/logo-rar.png";
 const OUT_DIR: &str = "assets/icons";
 
 fn main() {

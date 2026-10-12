@@ -94,7 +94,7 @@ cargo build --release --locked
 cargo test --locked
 ```
 
-Regenerate icons from the single hand-drawn source (`docs-zh/logo-rar.png`):
+Regenerate icons from the single hand-drawn source (`assets/logo-rar.png`):
 
 ```bash
 cargo run --example generate_icons
@@ -155,8 +155,8 @@ latest) · `unrar-ng` (extract) · `zip` crate (Deflate pack) ·
 ## Contributing
 
 Issues and PRs welcome. Please keep the free tree free of batch/paywall
-code — batch belongs in `plugins/`. See [`docs-zh/`](docs-zh/) (Chinese) for
-the original UI/tech/batch planning docs.
+code — batch belongs in `plugins/`. See [`docs/`](docs/) for the technical
+stack and UI design documents.
 
 ## License
 
