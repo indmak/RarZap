@@ -1,8 +1,7 @@
 # RarZap CI：三平台构建 + 测试 + 打包（开源免费版）。
-# 纯手动触发（Actions 页点 Run workflow）：push/PR 不触发任何构建。
-# 手动跑一次 = 单矩阵三作业（windows/macos/linux），每作业只编一次 release，
-# 测试用 --release 复用同一份构建，打包后挂 artifact 供下载，不发布。
-# 将来要发版时再加回 push/tags 触发；发 Release 仍只看 tag（见 github release 作业）。
+# - 手动触发（Actions → ci → Run workflow）：构建 + 测试 + 打包，产物挂 artifact 供测试，不发布。
+# - 打 tag（v*）：同一套构建 + 打包，完成后自动创建 GitHub Release（见 github release 作业）。
+#   发布流程：先用 Run workflow 测一轮 → 没问题再 push tag 定版发布。
 # - macOS 签名/公证：secrets 配齐才走，否则跳过（缺任一即跳）。
 # - Windows 签名：SignPath 获批前无签名（见命名文档）。
 # 代理：runner 直连外网，无需额外配置。
@@ -12,8 +11,11 @@
 name: ci
 
 on:
-  # 只手动点：Actions → ci → Run workflow。push/PR/tag 一律不自动跑。
+  # 手动点：只构建+打包，供本地测试。
   workflow_dispatch:
+  # 打 v* tag：构建+打包+自动发布 Release。
+  push:
+    tags: ["v*"]
 
 env:
   CARGO_TERM_COLOR: always
